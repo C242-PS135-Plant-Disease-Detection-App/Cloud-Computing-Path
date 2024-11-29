@@ -1,41 +1,23 @@
-const diagnosisHistory = [];
+const histories = []; // Simpan data history di memori sementara
 
-module.exports = {
-  saveHistory: async (request, h) => {
-    const { userId, disease, imageUrl, confidence } = request.payload;
+exports.getHistory = (request, h) => {
+  const { userId } = request.params;
 
-    try {
-      const historyEntry = {
-        id: diagnosisHistory.length + 1, 
-        userId,
-        disease,
-        imageUrl,
-        confidence,
-        timestamp: new Date(),
-      };
+  // Ambil data history berdasarkan userId
+  const userHistories = histories.filter((history) => history.userId === userId);
 
-      diagnosisHistory.push(historyEntry);
+  if (userHistories.length === 0) {
+    return h.response({ message: 'No history found for this user' }).code(404);
+  }
 
-      return h.response({ message: "History saved", data: historyEntry }).code(201);
-    } catch (err) {
-      return h.response({ message: "Error saving History", error: err.message }).code(500);
-    }
-  },
+  return h.response(userHistories).code(200);
+};
 
-  getHistory: async (request, h) => {
-    const { userId } = request.params;
+exports.addHistory = (request, h) => {
+  const { userId, disease, imageUrl, confidence } = request.payload;
 
-    try {
-      // Filter riwayat berdasarkan userId
-      const userHistory = diagnosisHistory.filter((entry) => entry.userId === userId);
+  const newHistory = { userId, disease, imageUrl, confidence, createdAt: new Date() };
+  histories.push(newHistory);
 
-      if (userHistory.length === 0) {
-        return h.response({ message: "No history found" }).code(404);
-      }
-
-      return h.response(userHistory).code(200);
-    } catch (err) {
-      return h.response({ error: err.message }).code(500);
-    }
-  },
+  return h.response({ message: 'History added successfully', data: newHistory }).code(201);
 };

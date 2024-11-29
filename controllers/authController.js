@@ -1,21 +1,29 @@
 const admin = require('../config/firebase-config');
 
-module.exports = {
+const authController = {
   login: async (request, h) => {
     const { idToken } = request.payload;
 
-    try {
-      const decodedToken = await admin.auth().verifyIdToken(idToken);
-      const { uid, email, name } = decodedToken;
+    if (!idToken) {
+      return h.response({ message: 'ID Token is required' }).code(400);
+    }
 
-      return h.response({
-        message: 'Login successful',
-        user: { uid, email, name },
-        history: userHistory,
-      }).code(200);
-    } catch (err) {
-      console.error('Error verifying token:', err.message);
-      return h.response({ message: 'Invalid token', error: err.message }).code(400);
+    try {
+      // Verifikasi token menggunakan Firebase Admin SDK
+      const decodedToken = await admin.auth().verifyIdToken(idToken);
+
+      const user = {
+        uid: decodedToken.uid,
+        email: decodedToken.email,
+        name: decodedToken.name || 'Anonymous',
+      };
+
+      return h.response({ message: 'Login successful', user }).code(200);
+    } catch (error) {
+      console.error('Error verifying token:', error.message);
+      return h.response({ message: 'Invalid token', error: error.message }).code(401);
     }
   },
 };
+
+module.exports = authController;
