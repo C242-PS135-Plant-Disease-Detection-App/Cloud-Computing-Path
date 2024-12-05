@@ -1,0 +1,18 @@
+runtime: nodejs20
+
+handlers:
+  - url: /static
+    static_dir: public
+
+  - url: /login
+    script: auto
+
+  - url: /predict
+    script: auto
+
+  - url: /diagnoses
+    script: auto
+
+  - url: /.*
+    static_files: public/index.html
+    upload: public/index.html

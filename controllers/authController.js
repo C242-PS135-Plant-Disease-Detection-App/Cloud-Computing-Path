@@ -4,6 +4,8 @@ const authController = {
   login: async (request, h) => {
     const { idToken } = request.payload;
 
+    console.log("Request payload:", request.payload);
+
     if (!idToken) {
       return h.response({ message: 'ID Token is required' }).code(400);
     }
@@ -11,6 +13,7 @@ const authController = {
     try {
       // Verifikasi token menggunakan Firebase Admin SDK
       const decodedToken = await admin.auth().verifyIdToken(idToken);
+      console.log('Decoded token:', decodedToken);
 
       const user = {
         uid: decodedToken.uid,
