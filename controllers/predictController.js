@@ -1,7 +1,7 @@
 const db = require('../config/db-config');
 const { generatePlantDiseaseDescription } = require('../services/textGenerate');
 
-const predict = async (request, h) => {
+exports.predict = async (request, h) => {
   const { name, plant, accuracy, image } = request.payload;
 
   try {
@@ -35,5 +35,3 @@ const predict = async (request, h) => {
       .code(500);
   }
 };
-
-module.exports = predict;

@@ -1,7 +1,7 @@
 const authController = require('../controllers/authController');
 const verifyToken = require('../middleware/verifyToken');
-const getAllDiagnoses = require('../controllers/diagnoseController');
-const predict = require('../controllers/predictController');
+const { getAllDiagnoses } = require('../controllers/historyController');
+const { predict } = require('../controllers/predictController');
 
 const routes = [
   {
