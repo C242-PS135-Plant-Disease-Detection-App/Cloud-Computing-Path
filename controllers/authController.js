@@ -15,7 +15,8 @@ const authController = {
       const user = {
         uid: decodedToken.uid,
         email: decodedToken.email,
-        name: decodedToken.name || 'Anonymous',
+        name: decodedToken.name,
+        picture: decodedToken.picture,
       };
 
       return h.response({ message: 'Login successful', user }).code(200);

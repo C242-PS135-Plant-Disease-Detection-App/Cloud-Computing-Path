@@ -1,13 +1,16 @@
 const authController = require('../controllers/authController');
-const predictController = require('../controllers/predictController');
-const historyController = require('../controllers/historyController');
 const verifyToken = require('../middleware/verifyToken');
+const getAllDiagnoses = require('../controllers/diagnoseController');
+const predict = require('../controllers/predictController');
 
 const routes = [
   {
     method: 'POST',
     path: '/predict',
-    handler: predictController.detect,
+    handler: predict,
+    options: {
+      pre: [{ method: verifyToken }],
+    },
   },
   {
     method: 'POST',
@@ -15,17 +18,9 @@ const routes = [
     handler: authController.login,
   },
   {
-    method: 'POST',
-    path: '/history/{userId}',
-    handler: historyController.addHistory,
-    options: {
-      pre: [{ method: verifyToken }],
-    },
-  },
-  {
     method: 'GET',
-    path: '/history/{userId}',
-    handler: historyController.getHistory,
+    path: '/diagnoses',
+    handler: getAllDiagnoses,
     options: {
       pre: [{ method: verifyToken }],
     },

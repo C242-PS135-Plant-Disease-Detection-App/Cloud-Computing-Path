@@ -1,36 +1,21 @@
 -- Database: `Plantanist`
 
 
--- Table structure for table `users`
-
-CREATE TABLE users (
-    user_id INT UNSIGNED PRIMARY KEY,  -- ID unik pengguna
-    google_id VARCHAR(255) UNIQUE NOT NULL,  -- ID unik dari Google
-    username VARCHAR(255) UNIQUE NOT NULL,  -- Nama pengguna
-    email VARCHAR(255) UNIQUE NOT NULL,  -- Email pengguna
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Waktu pembuatan akun
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
-
-CREATE TABLE plant_disease (
-    disease_id INT UNSIGNED PRIMARY KEY,  -- ID penyakit
-    disease_name VARCHAR(255) NOT NULL,  -- Nama penyakit
-    description_disease TEXT,  -- Deskripsi penyakit
-    image_url VARCHAR(255),  -- URL gambar terkait penyakit
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  -- Waktu deteksi penyakit
-);
-
-CREATE TABLE user_histories (
-    history_id SERIAL PRIMARY KEY,
-    user_id INT UNSIGNED NOT NULL, -- Sesuaikan tipe data agar sama dengan tabel users
-    disease_id INT UNSIGNED,
-    plant_image_url VARCHAR(255),
-    details TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (disease_id) REFERENCES plant_diseases(disease_id) ON DELETE SET NULL
-);
+CREATE TABLE `diagnoses` (
+  `id` int NOT NULL,
+  `user_id` varchar(35) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `plant` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `accuracy` float NOT NULL,
+  `description` text COLLATE utf8mb4_general_ci NOT NULL,
+  `image` text COLLATE utf8mb4_general_ci NOT NULL,
+  `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
+ALTER TABLE `diagnoses`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `diagnoses`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+COMMIT;

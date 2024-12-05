@@ -1,23 +1,21 @@
-const histories = []; // Simpan data history di memori sementara
+const db = require("../config/db-config");
 
-exports.getHistory = (request, h) => {
-  const { userId } = request.params;
-
-  // Ambil data history berdasarkan userId
-  const userHistories = histories.filter((history) => history.userId === userId);
-
-  if (userHistories.length === 0) {
-    return h.response({ message: 'No history found for this user' }).code(404);
-  }
-
-  return h.response(userHistories).code(200);
+const getAllDiagnoses = async (request, h) => {
+    const sql = 'SELECT * FROM diagnoses WHERE user_id = ?';  // Query SQL untuk mengambil data berdasarkan user_id
+    try {
+        const [result] = await db.promise().query(sql, request.user.uid);
+        return h.response({
+            status: 'success',
+            message: 'Data berhasil diambil',
+            result
+        });
+    } catch (error) {
+        console.error(error);
+        return h.response({
+            status: 'fail',
+            message: 'Internal Server Error'
+        }).code(500);
+    }
 };
 
-exports.addHistory = (request, h) => {
-  const { userId, disease, imageUrl, confidence } = request.payload;
-
-  const newHistory = { userId, disease, imageUrl, confidence, createdAt: new Date() };
-  histories.push(newHistory);
-
-  return h.response({ message: 'History added successfully', data: newHistory }).code(201);
-};
+module.exports = getAllDiagnoses;
