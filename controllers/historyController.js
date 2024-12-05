@@ -1,6 +1,6 @@
 const db = require("../config/db-config");
 
-const getAllDiagnoses = async (request, h) => {
+exports.getAllDiagnoses = async (request, h) => {
     const sql = 'SELECT * FROM diagnoses WHERE user_id = ?';  // Query SQL untuk mengambil data berdasarkan user_id
     try {
         const [result] = await db.promise().query(sql, request.user.uid);
@@ -16,6 +16,4 @@ const getAllDiagnoses = async (request, h) => {
             message: 'Internal Server Error'
         }).code(500);
     }
-};
-
-module.exports = getAllDiagnoses;
+}

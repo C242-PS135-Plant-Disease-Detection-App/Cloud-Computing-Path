@@ -1,6 +1,6 @@
 const authController = require('../controllers/authController');
 const verifyToken = require('../middleware/verifyToken');
-const getAllDiagnoses = require('../controllers/diagnoseController');
+const getAllDiagnoses = require('../controllers/historyController');
 const predict = require('../controllers/predictController');
 
 const routes = [
@@ -19,7 +19,7 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/diagnoses',
+    path: '/predict',
     handler: getAllDiagnoses,
     options: {
       pre: [{ method: verifyToken }],
