@@ -1,18 +1,22 @@
 runtime: nodejs20
 
 handlers:
-  - url: /static
-    static_dir: public
-
+  # Rute untuk login API
   - url: /login
     script: auto
 
+  # Rute untuk predict API
   - url: /predict
     script: auto
 
+  # Rute untuk diagnoses API
   - url: /diagnoses
     script: auto
 
+  # Rute untuk file statis
+  - url: /static
+    static_dir: public
+
+  # Fallback untuk semua rute lain (404 handler)
   - url: /.*
-    static_files: public/index.html
-    upload: public/index.html
+    script: auto

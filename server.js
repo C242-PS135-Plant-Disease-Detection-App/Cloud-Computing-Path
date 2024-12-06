@@ -25,12 +25,21 @@ const init = async () => {
     },
   });
 
-  // Fallback untuk SPA (Single Page Application)
+  // Rute untuk melayani index.html di /login
   server.route({
     method: 'GET',
-    path: '/{param*}',
+    path: '/login',
     handler: (request, h) => {
       return h.file('public/index.html');
+    },
+  });
+
+  // Fallback untuk rute yang tidak dikenal
+  server.route({
+    method: '*',
+    path: '/{any*}',
+    handler: (request, h) => {
+      return h.response({ message: 'ERROR 404 Not Found' }).code(404);
     },
   });
 
