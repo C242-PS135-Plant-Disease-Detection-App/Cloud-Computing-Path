@@ -9,13 +9,13 @@ import {
 
 // Konfigurasi Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyDEU7D2jyEZTpZktl1gU3t1jfB6i6h3JXs",
-  authDomain: "plantanist-login.firebaseapp.com",
-  projectId: "plantanist-login",
-  storageBucket: "plantanist-login.appspot.com",
-  messagingSenderId: "1050998665452",
-  appId: "1:1050998665452:web:b9005463e13950a278b5c9",
-  measurementId: "G-64Q31QD426",
+  apiKey: "AIzaSyDjcc8FFJR-Wc8yYGZ20VkI9kimDwTeYNM",
+  authDomain: "capstonebangkit-plantanist.firebaseapp.com",
+  projectId: "capstonebangkit-plantanist",
+  storageBucket: "capstonebangkit-plantanist.firebasestorage.app",
+  messagingSenderId: "656338336155",
+  appId: "1:656338336155:web:0638e504cb4df5fc61893e",
+  measurementId: "G-G074QMHQE0"
 };
 
 const app = initializeApp(firebaseConfig);
